@@ -1,0 +1,60 @@
+{
+    "name": "billy bob game real one",
+    "description": "",
+    "dependencies": {
+        "device": "*",
+        "arcade-mini-menu": "github:riknoll/arcade-mini-menu#v0.0.1",
+        "animation": "*",
+        "pxt-status-bar": "github:jwunderl/pxt-status-bar#v0.4.2",
+        "Inventory": "github:unsignedarduino/inventory#v1.1.1",
+        "controller": "*",
+        "pxt-button-combos": "github:jwunderl/pxt-button-combos#v0.0.24",
+        "damage-indicators": "github:AidanTilanus/damage-indicators#79b6198d54b311162cf991b23d5043e4197b287c",
+        "FastRandomBlocks": "github:UnsignedArduino/Fast-Random-Blocks#8c985a77e5c4278e43a7bc375db095c67afb58ed",
+        "Extra Effects": "github:alexszeto/extra-effects#v3.1.0",
+        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+    },
+    "files": [
+        "main.blocks",
+        "main.ts",
+        "README.md",
+        "assets.json",
+        "tilemap.g.jres",
+        "tilemap.g.ts",
+        "images.g.jres",
+        "images.g.ts"
+    ],
+    "testFiles": [
+        "test.ts"
+    ],
+    "targetVersions": {
+        "branch": "v1.12.56",
+        "tag": "v1.12.56",
+        "commits": "https://github.com/microsoft/pxt-arcade/commits/415ef2df2ac233e8d214fef5f4ea26f2f5de232a",
+        "target": "1.12.57",
+        "pxt": "8.5.67",
+        "targetId": "arcade"
+    },
+    "supportedTargets": [
+        "arcade"
+    ],
+    "preferredEditor": "blocksprj",
+    "palette": [
+        "#000000",
+        "#389636",
+        "#7D4A4A",
+        "#FF93C4",
+        "#AD7B43",
+        "#FFF609",
+        "#249CA3",
+        "#78DC52",
+        "#003FAD",
+        "#87F2FF",
+        "#48454A",
+        "#A4839F",
+        "#89301A",
+        "#E5CDC4",
+        "#91463d",
+        "#000000"
+    ]
+}
