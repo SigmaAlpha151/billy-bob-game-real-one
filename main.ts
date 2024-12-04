@@ -22,9 +22,14 @@ function load_combat () {
     statusbar2.attachToSprite(enemy1)
 }
 scene.onHitWall(SpriteKind.Player, function (sprite, location) {
-    if (mySprite.tileKindAt(TileDirection.Right, assets.tile`cash rgister`) && game.ask("trade?")) {
-        witchtrade()
-    }
+    timer.throttle("action", 500, function () {
+        if (menuOpen == false) {
+            if (mySprite.tileKindAt(TileDirection.Right, assets.tile`cash rgister`) && game.ask("trade?")) {
+                menuOpen = true
+                witchtrade()
+            }
+        }
+    })
 })
 function load_wall () {
     for (let wall1 of tiles.getTilesByType(assets.tile`myTile0`)) {
@@ -169,9 +174,11 @@ function load_status_bar () {
     healthBar.max = 100
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, location) {
-    sprites.destroy(mySprite2)
-    tiles.setCurrentTilemap(tilemap`level`)
-    load_wall()
+    timer.throttle("action", 500, function () {
+        sprites.destroy(mySprite2)
+        tiles.setCurrentTilemap(tilemap`level`)
+        load_wall()
+    })
 })
 function enemy_attack () {
     if (statusbar2.value <= 10 && enemyHeal > 0) {
@@ -266,20 +273,28 @@ function witchtrade () {
         } else if (selectedIndex == 1) {
             if (questStatus == 0) {
                 quest1()
+                canMove = true
+                menuOpen = false
             } else if (questStatus == 1 && quest_objective1 == 1) {
                 effects.confetti.startScreenEffect(5000)
                 game.showLongText("thank you for getting my stone here is 100 gold", DialogLayout.Bottom)
                 info.changeScoreBy(100)
+                canMove = true
+                menuOpen = false
             } else {
                 game.showLongText("Please retrieve my stone!", DialogLayout.Bottom)
+                canMove = true
+                menuOpen = false
             }
+        } else {
+            canMove = true
+            menuOpen = false
         }
-        canMove = true
     })
 }
 function attack () {
     Attack = miniMenu.createMenu(
-    miniMenu.createMenuItem("Shoot"),
+    miniMenu.createMenuItem("sword slash"),
     miniMenu.createMenuItem("back")
     )
     Attack.onButtonPressed(controller.A, function (selection, selectedIndex) {
@@ -288,107 +303,7 @@ function attack () {
             fightStatus += 1
             animation.runImageAnimation(
             mySprite,
-            [img`
-                ........................
-                ....ffffff..............
-                ..ffeeeef2f.............
-                .ffeeeef222f............
-                .feeeffeeeef...aa.......
-                .ffffee2222ef.aba.......
-                .fe222ffffe2fabba.......
-                fffffff444ffabba........
-                ff44449fd44abba.........
-                f44ddd3fdddaba..........
-                .fdddddddddaaa..........
-                ..ff9999999de...........
-                ...f999999ee............
-                ...f999999f.............
-                ...f666666f.............
-                ....ffffff..............
-                .....fff................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                `,img`
-                ........................
-                .......fff..............
-                ....fffff2f.............
-                ..ffeeeee22ff...........
-                .ffeeeeee222ff..........
-                .feeeefffeeeef..........
-                .fffffeee2222ef.........
-                fffe222fffffe2f.........
-                fffffffff444fff.....aa..
-                f444444b9fd444f...aaba..
-                .fdddddb3fdddf..aabbaa..
-                ..fdddddddddfeeabbba....
-                ...f999999999ddabaa.....
-                ...f666666699ddaaa......
-                ...ffffffffeeee.........
-                ...fff...ff.............
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                `,img`
-                .......ff...............
-                ....ffff2ff.............
-                ..ffeeeef2ff............
-                .ffeeeeef22ff...........
-                .feeeeffeeeef...........
-                .fffffee2222ef..........
-                fffe222ffffe2f..........
-                ffffffffeeefff..........
-                fefe44ebf44eef..........
-                .fee4d4bfddef...........
-                ..feee4dddee.c..........
-                ...f2222eeddeccccccc....
-                ...f444e44ddecddddd.....
-                ...fffffeeee.ccccc......
-                ..ffffffff...c..........
-                ..fff..ff...............
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                `,img`
-                ....ffffff..............
-                ..ffeeeef2f.............
-                .ffeeeef222f............
-                .feeeffeeeef............
-                .ffffee2222ef...........
-                .fe222ffffe2f...........
-                fffffffeeefff...........
-                ffe44ebf44eef...........
-                fee4d41fddef............
-                .feee4ddddf.............
-                ..fdde444ef.............
-                ..fdde22ccc.............
-                ...eef22cdc.............
-                ...f4444cddc............
-                ....fffffcddc...........
-                .....fff..cddc..........
-                ...........cdc..........
-                ............cc..........
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                ........................
-                `],
+            assets.animation`attack_anim_sword`,
             500,
             false
             )
@@ -406,12 +321,14 @@ function attack () {
     })
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, location) {
-    if (game.ask("Go to town?")) {
-        tiles.setCurrentTilemap(tilemap`level`)
-        load_wall()
-        mySprite.setPosition(14, 77)
-        canAttack += -1
-    }
+    timer.throttle("action", 500, function () {
+        if (game.ask("Go to town?")) {
+            tiles.setCurrentTilemap(tilemap`level`)
+            load_wall()
+            mySprite.setPosition(14, 77)
+            canAttack += -1
+        }
+    })
 })
 function encounter1 () {
     if (statusbar2.value == 0) {
@@ -443,13 +360,15 @@ function encounter1 () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest2`, function (sprite, location) {
-    if (game.ask("Open chest?") && Chest2 == 0) {
-        game.splash("You found 50 gold")
-        info.changeScoreBy(50)
-        Chest2 += 1
-    } else {
-        game.showLongText("The chest is empty", DialogLayout.Bottom)
-    }
+    timer.throttle("action", 500, function () {
+        if (game.ask("Open chest?") && Chest2 == 0) {
+            game.splash("You found 50 gold")
+            info.changeScoreBy(50)
+            Chest2 += 1
+        } else {
+            game.showLongText("The chest is empty", DialogLayout.Bottom)
+        }
+    })
 })
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     if (canMove == true) {
@@ -483,13 +402,15 @@ function potion () {
     })
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest1`, function (sprite, location) {
-    if (game.ask("Open chest?") && Chest1 == 0) {
-        game.splash("You found 50 gold")
-        info.changeScoreBy(50)
-        Chest1 += 1
-    } else {
-        game.showLongText("The chest is empty", DialogLayout.Bottom)
-    }
+    timer.throttle("action", 500, function () {
+        if (game.ask("Open chest?") && Chest1 == 0) {
+            game.splash("You found 50 gold")
+            info.changeScoreBy(50)
+            Chest1 += 1
+        } else {
+            game.showLongText("The chest is empty", DialogLayout.Bottom)
+        }
+    })
 })
 function travel_to_forest () {
     tiles.setCurrentTilemap(tilemap`level10`)
@@ -500,17 +421,21 @@ function travel_to_forest () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile53`, function (sprite, location) {
-    if (game.ask("Travel to forest?")) {
-        travel_to_forest()
-    }
+    timer.throttle("action", 500, function () {
+        if (game.ask("Travel to forest?")) {
+            travel_to_forest()
+        }
+    })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, location) {
-    canMove = false
-    load_combat()
-    encounter1()
+    timer.throttle("action", 500, function () {
+        canMove = false
+        load_combat()
+        encounter1()
+    })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
-    timer.throttle("action", 500, function () {
+    timer.throttle("action", 1000, function () {
         if (game.ask("enter witches hut?")) {
             tiles.setCurrentTilemap(tilemap`house inside 1`)
             mySprite2 = sprites.create(assets.image`witch`, SpriteKind.npc)
@@ -531,14 +456,16 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, 
     })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile26`, function (sprite, location) {
-    if (questStatus == 1) {
-        effects.confetti.startScreenEffect(5000)
-        game.splash("you have picked up \"magic stone\"")
-        quest_objective1 += 1
-        tiles.setTileAt(location, sprites.castle.tileDarkGrass1)
-    } else {
-        game.showLongText("*weird glowing rock*", DialogLayout.Bottom)
-    }
+    timer.throttle("action", 500, function () {
+        if (questStatus == 1) {
+            effects.confetti.startScreenEffect(5000)
+            game.splash("you have picked up \"magic stone\"")
+            quest_objective1 += 1
+            tiles.setTileAt(location, sprites.castle.tileDarkGrass1)
+        } else {
+            game.showLongText("*weird glowing rock*", DialogLayout.Bottom)
+        }
+    })
 })
 let potionMenu: miniMenu.MenuSprite = null
 let combatMenu: miniMenu.MenuSprite = null
@@ -551,6 +478,7 @@ let mySprite2: Sprite = null
 let myMenu: miniMenu.MenuSprite = null
 let inventorycount: miniMenu.MenuSprite = null
 let inventory_menu: miniMenu.MenuSprite = null
+let menuOpen = false
 let enemy1: Sprite = null
 let healthBar: StatusBarSprite = null
 let statusbar2: StatusBarSprite = null
@@ -640,7 +568,7 @@ for (let wall22 of tiles.getTilesByType(assets.tile`myTile52`)) {
 }
 game.onUpdate(function () {
     if (canMove == true) {
-        controller.moveSprite(mySprite)
+        controller.moveSprite(mySprite, 100, 100)
         scene.cameraFollowSprite(mySprite)
     } else {
         controller.moveSprite(mySprite, 0, 0)
