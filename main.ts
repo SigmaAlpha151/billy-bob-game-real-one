@@ -325,6 +325,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, 
             load_wall()
             mySprite.setPosition(14, 77)
             canAttack += -1
+            music.stopAllSounds()
         }
     })
 })
@@ -440,6 +441,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile53`, function (sprite, 
     timer.throttle("action", 500, function () {
         if (game.ask("Travel to forest?")) {
             travel_to_forest()
+            music.play(music.createSong(assets.song`the woods`), music.PlaybackMode.LoopingInBackground)
         }
     })
 })
