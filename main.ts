@@ -251,8 +251,8 @@ function enemy_attack () {
             false
             )
             timer.after(500, function () {
-                healthBar.value += -20
-                myIndicator2 = damageIndicators.makeIndicator("-20", 12)
+                healthBar.value += -30
+                myIndicator2 = damageIndicators.makeIndicator("-30", 12)
                 damageIndicators.showIndicatorSprite(mySprite, myIndicator2)
                 encounter1()
             })
@@ -304,7 +304,7 @@ function attack () {
             animation.runImageAnimation(
             mySprite,
             assets.animation`attack_anim_sword`,
-            500,
+            100,
             false
             )
             myIndicator = damageIndicators.makeIndicator("-5", 12)
@@ -313,8 +313,6 @@ function attack () {
                 encounter1()
             })
             statusbar2.value += -5
-        } else if (selectedIndex == 1) {
-        	
         } else {
             encounter1()
         }
@@ -331,31 +329,36 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, 
     })
 })
 function encounter1 () {
-    if (statusbar2.value == 0) {
-        game.splash("You won the fight.", "Gain 20 gold")
-        info.changeScoreBy(50)
-        sprites.destroy(enemy1, effects.spray, 500)
-        timer.after(500, function () {
-            healthBar.value = healthBar.max
-            canMove = true
-            travel_to_forest()
-        })
+    if (healthBar.value <= 0) {
+        game.splash("you are dead")
+        dead_screen()
     } else {
-        if (fightStatus == 0) {
-            combatMenu = miniMenu.createMenu(
-            miniMenu.createMenuItem("Attack"),
-            miniMenu.createMenuItem("Potions")
-            )
-            combatMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
-                combatMenu.close()
-                if (selectedIndex == 0) {
-                    attack()
-                } else {
-                    potion()
-                }
+        if (statusbar2.value == 0) {
+            game.splash("You won the fight.", "Gain 20 gold")
+            info.changeScoreBy(50)
+            sprites.destroy(enemy1, effects.spray, 500)
+            timer.after(500, function () {
+                healthBar.value = healthBar.max
+                canMove = true
+                travel_to_forest()
             })
         } else {
-            enemy_attack()
+            if (fightStatus == 0) {
+                combatMenu = miniMenu.createMenu(
+                miniMenu.createMenuItem("Attack"),
+                miniMenu.createMenuItem("Potions")
+                )
+                combatMenu.onButtonPressed(controller.A, function (selection, selectedIndex) {
+                    combatMenu.close()
+                    if (selectedIndex == 0) {
+                        attack()
+                    } else {
+                        potion()
+                    }
+                })
+            } else {
+                enemy_attack()
+            }
         }
     }
 }
@@ -377,6 +380,18 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
         menu()
     }
 })
+function dead_screen () {
+    dead_menu = miniMenu.createMenu(
+    miniMenu.createMenuItem("you highest score was" + info.highScore()),
+    miniMenu.createMenuItem("respawn")
+    )
+    dead_menu.onButtonPressed(controller.A, function (selection, selectedIndex) {
+        dead_menu.close()
+        if (selectedIndex == 1) {
+        	
+        }
+    })
+}
 function potion () {
     potionMenu = miniMenu.createMenu(
     miniMenu.createMenuItem("Health Potion", assets.image`health_potion`),
@@ -468,6 +483,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile26`, function (sprite, 
     })
 })
 let potionMenu: miniMenu.MenuSprite = null
+let dead_menu: miniMenu.MenuSprite = null
 let combatMenu: miniMenu.MenuSprite = null
 let canAttack = 0
 let myIndicator: damageIndicators.Indicator = null
