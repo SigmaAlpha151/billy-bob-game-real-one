@@ -381,6 +381,7 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function dead_screen () {
+    music.stopAllSounds()
     dead_menu = miniMenu.createMenu(
     miniMenu.createMenuItem("you highest score was" + info.highScore()),
     miniMenu.createMenuItem("respawn")
@@ -447,6 +448,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
         canMove = false
         load_combat()
         encounter1()
+        music.play(music.createSong(assets.song`boss`), music.PlaybackMode.LoopingInBackground)
     })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
