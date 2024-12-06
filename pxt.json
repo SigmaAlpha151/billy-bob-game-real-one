@@ -12,7 +12,8 @@
         "damage-indicators": "github:AidanTilanus/damage-indicators#79b6198d54b311162cf991b23d5043e4197b287c",
         "FastRandomBlocks": "github:UnsignedArduino/Fast-Random-Blocks#8c985a77e5c4278e43a7bc375db095c67afb58ed",
         "Extra Effects": "github:alexszeto/extra-effects#v3.1.0",
-        "Timers": "github:microsoft/arcade-timers#v1.1.0"
+        "Timers": "github:microsoft/arcade-timers#v1.1.0",
+        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0"
     },
     "files": [
         "main.blocks",
