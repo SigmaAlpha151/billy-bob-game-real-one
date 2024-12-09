@@ -330,10 +330,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, 
 })
 function encounter1 () {
     if (healthBar.value <= 0) {
-        sprites.destroy(mySprite)
-        sprites.destroy(enemy1)
-        sprites.destroy(healthBar)
-        sprites.destroy(statusbar2)
         game.splash("you are dead")
         dead_screen()
     } else {
@@ -387,7 +383,7 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
 function dead_screen () {
     music.stopAllSounds()
     dead_menu = miniMenu.createMenu(
-    miniMenu.createMenuItem("you ended with a score of: " + gold),
+    miniMenu.createMenuItem("you highest score was" + info.highScore()),
     miniMenu.createMenuItem("respawn")
     )
     dead_menu.onButtonPressed(controller.A, function (selection, selectedIndex) {
@@ -452,7 +448,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
         canMove = false
         load_combat()
         encounter1()
-        music.play(music.createSong(assets.song`boss`), music.PlaybackMode.LoopingInBackground)
+        music.play(music.createSong(assets.song`mySong0`), music.PlaybackMode.LoopingInBackground)
     })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
@@ -508,7 +504,6 @@ let In_Combat = 0
 let fightStatus = 0
 let enemyHeal = 0
 let mySprite: Sprite = null
-let gold = 0
 let quest_objective1 = 0
 let questStatus = 0
 let Chest2 = 0
@@ -526,7 +521,7 @@ Chest2 = 0
 // 0 = quest not started, 1 = quest in progress, 2 = quest completed
 questStatus = 0
 quest_objective1 = 0
-gold = 50
+let gold = 50
 mySprite = sprites.create(assets.image`character`, SpriteKind.Player)
 info.setScore(gold)
 load_status_bar()
