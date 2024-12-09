@@ -448,7 +448,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
         canMove = false
         load_combat()
         encounter1()
-        music.play(music.createSong(assets.song`boss`), music.PlaybackMode.LoopingInBackground)
+        music.play(music.createSong(assets.song`mySong0`), music.PlaybackMode.LoopingInBackground)
     })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
