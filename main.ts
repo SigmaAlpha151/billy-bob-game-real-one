@@ -334,6 +334,7 @@ function encounter1 () {
         dead_screen()
     } else {
         if (statusbar2.value == 0) {
+            music.stopAllSounds()
             game.splash("You won the fight.", "Gain 20 gold")
             info.changeScoreBy(50)
             sprites.destroy(enemy1, effects.spray, 500)
