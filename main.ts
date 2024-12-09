@@ -335,6 +335,7 @@ function encounter1 () {
     } else {
         if (statusbar2.value == 0) {
             music.stopAllSounds()
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You won the fight.", "Gain 20 gold")
             info.changeScoreBy(50)
             sprites.destroy(enemy1, effects.spray, 500)
@@ -366,6 +367,7 @@ function encounter1 () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest2`, function (sprite, location) {
     timer.throttle("action", 500, function () {
         if (game.ask("Open chest?") && Chest2 == 0) {
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You found 50 gold")
             info.changeScoreBy(50)
             Chest2 += 1
@@ -421,6 +423,7 @@ function potion () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest1`, function (sprite, location) {
     timer.throttle("action", 500, function () {
         if (game.ask("Open chest?") && Chest1 == 0) {
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You found 50 gold")
             info.changeScoreBy(50)
             Chest1 += 1

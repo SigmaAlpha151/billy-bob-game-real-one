@@ -70,6 +70,12 @@
         "displayName": "mySong0",
         "namespace": "mySongs."
     },
+    "song3": {
+        "data": "0078000408010100001c00010a006400f401640000040000000000000000000000000005000004310000000100021d2003000400021d2006000700021d2009000a00021e220b000c00021d200e000f00021e2211002000022024",
+        "mimeType": "application/mkcd-song",
+        "displayName": "open chest",
+        "namespace": "mySongs."
+    },
     "*": {
         "mimeType": "image/x-mkcd-f4",
         "dataEncoding": "base64",
