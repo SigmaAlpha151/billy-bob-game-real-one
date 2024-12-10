@@ -175,6 +175,7 @@ function load_status_bar () {
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, location) {
     timer.throttle("action", 500, function () {
+        music.stopAllSounds()
         sprites.destroy(mySprite2)
         tiles.setCurrentTilemap(tilemap`level`)
         load_wall()
@@ -458,6 +459,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
     timer.throttle("action", 1000, function () {
         if (game.ask("enter witches hut?")) {
+            music.play(music.createSong(assets.song`whitches hut`), music.PlaybackMode.UntilDone)
             tiles.setCurrentTilemap(tilemap`house inside 1`)
             mySprite2 = sprites.create(assets.image`witch`, SpriteKind.npc)
             mySprite2.setPosition(150, 15)
