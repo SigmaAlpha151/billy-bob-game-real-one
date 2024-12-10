@@ -175,6 +175,7 @@ function load_status_bar () {
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, location) {
     timer.throttle("action", 500, function () {
+        music.stopAllSounds()
         sprites.destroy(mySprite2)
         tiles.setCurrentTilemap(tilemap`level`)
         load_wall()
@@ -335,6 +336,7 @@ function encounter1 () {
     } else {
         if (statusbar2.value == 0) {
             music.stopAllSounds()
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You won the fight.", "Gain 20 gold")
             info.changeScoreBy(50)
             sprites.destroy(enemy1, effects.spray, 500)
@@ -366,6 +368,7 @@ function encounter1 () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest2`, function (sprite, location) {
     timer.throttle("action", 500, function () {
         if (game.ask("Open chest?") && Chest2 == 0) {
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You found 50 gold")
             info.changeScoreBy(50)
             Chest2 += 1
@@ -421,6 +424,7 @@ function potion () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest1`, function (sprite, location) {
     timer.throttle("action", 500, function () {
         if (game.ask("Open chest?") && Chest1 == 0) {
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You found 50 gold")
             info.changeScoreBy(50)
             Chest1 += 1
@@ -455,6 +459,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
     timer.throttle("action", 1000, function () {
         if (game.ask("enter witches hut?")) {
+            music.play(music.createSong(assets.song`whitches hut`), music.PlaybackMode.LoopingInBackground)
             tiles.setCurrentTilemap(tilemap`house inside 1`)
             mySprite2 = sprites.create(assets.image`witch`, SpriteKind.npc)
             mySprite2.setPosition(150, 15)
