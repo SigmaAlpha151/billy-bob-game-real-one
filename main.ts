@@ -459,7 +459,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
     timer.throttle("action", 1000, function () {
         if (game.ask("enter witches hut?")) {
-            music.play(music.createSong(assets.song`whitches hut`), music.PlaybackMode.UntilDone)
+            music.play(music.createSong(assets.song`whitches hut`), music.PlaybackMode.LoopingInBackground)
             tiles.setCurrentTilemap(tilemap`house inside 1`)
             mySprite2 = sprites.create(assets.image`witch`, SpriteKind.npc)
             mySprite2.setPosition(150, 15)
