@@ -251,6 +251,7 @@ function enemy_attack () {
             500,
             false
             )
+            music.play(music.createSoundEffect(WaveShape.Noise, 2483, 1, 225, 225, 438, SoundExpressionEffect.Vibrato, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
             timer.after(500, function () {
                 healthBar.value += -30
                 myIndicator2 = damageIndicators.makeIndicator("-30", 12)
@@ -308,6 +309,7 @@ function attack () {
             100,
             false
             )
+            music.play(music.createSoundEffect(WaveShape.Sawtooth, 2201, 1, 243, 243, 352, SoundExpressionEffect.Vibrato, InterpolationCurve.Linear), music.PlaybackMode.InBackground)
             myIndicator = damageIndicators.makeIndicator("-5", 12)
             damageIndicators.showIndicatorSprite(enemy1, myIndicator)
             timer.after(500, function () {
