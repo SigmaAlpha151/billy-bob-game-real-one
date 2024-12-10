@@ -6,6 +6,9 @@ enum ActionKind {
 namespace SpriteKind {
     export const npc = SpriteKind.create()
 }
+namespace StatusBarKind {
+    export const load = StatusBarKind.create()
+}
 function load_combat () {
     enemyHeal = 1
     fightStatus = 0
@@ -32,6 +35,80 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     })
 })
 function load_wall () {
+    for (let wall1 of tiles.getTilesByType(assets.tile`myTile0`)) {
+        tiles.setWallAt(wall1, true)
+    }
+    for (let wall2 of tiles.getTilesByType(assets.tile`myTile12`)) {
+        tiles.setWallAt(wall2, true)
+    }
+    for (let wall3 of tiles.getTilesByType(assets.tile`myTile13`)) {
+        tiles.setWallAt(wall3, true)
+    }
+    for (let wall4 of tiles.getTilesByType(assets.tile`myTile17`)) {
+        tiles.setWallAt(wall4, true)
+    }
+    for (let wall5 of tiles.getTilesByType(assets.tile`myTile19`)) {
+        tiles.setWallAt(wall5, true)
+    }
+    for (let wall6 of tiles.getTilesByType(assets.tile`myTile3`)) {
+        tiles.setWallAt(wall6, true)
+    }
+    for (let wall7 of tiles.getTilesByType(assets.tile`myTile21`)) {
+        tiles.setWallAt(wall7, true)
+    }
+    for (let wall8 of tiles.getTilesByType(assets.tile`myTile28`)) {
+        tiles.setWallAt(wall8, true)
+    }
+    for (let wall9 of tiles.getTilesByType(assets.tile`myTile29`)) {
+        tiles.setWallAt(wall9, true)
+    }
+    for (let wall10 of tiles.getTilesByType(assets.tile`myTile29`)) {
+        tiles.setWallAt(wall10, true)
+    }
+    for (let wall11 of tiles.getTilesByType(assets.tile`myTile31`)) {
+        tiles.setWallAt(wall11, true)
+    }
+    for (let wall12 of tiles.getTilesByType(assets.tile`myTile33`)) {
+        tiles.setWallAt(wall12, true)
+    }
+    for (let wall13 of tiles.getTilesByType(assets.tile`myTile32`)) {
+        tiles.setWallAt(wall13, true)
+    }
+    for (let wall14 of tiles.getTilesByType(assets.tile`myTile34`)) {
+        tiles.setWallAt(wall14, true)
+    }
+    for (let wall15 of tiles.getTilesByType(assets.tile`myTile35`)) {
+        tiles.setWallAt(wall15, true)
+    }
+    for (let wall20 of tiles.getTilesByType(assets.tile`myTile44`)) {
+        tiles.setWallAt(wall20, true)
+    }
+    for (let wall21 of tiles.getTilesByType(assets.tile`myTile45`)) {
+        tiles.setWallAt(wall21, true)
+    }
+    for (let wall22 of tiles.getTilesByType(assets.tile`myTile52`)) {
+        tiles.setWallAt(wall22, true)
+    }
+}
+function load_game () {
+    Heal = 1
+    Mana = 1
+    Stamina = 1
+    canMove = true
+    Chest1 = 0
+    Chest2 = 0
+    // 0 = quest not started, 1 = quest in progress, 2 = quest completed
+    questStatus = 0
+    quest_objective1 = 0
+    gold = 50
+    mySprite = sprites.create(assets.image`character`, SpriteKind.Player)
+    info.setScore(gold)
+    load_status_bar()
+    mySprite.setVelocity(0, 0)
+    mySprite.setPosition(14, 77)
+    mySprite.setStayInScreen(true)
+    mySprite.setBounceOnWall(true)
+    tiles.setCurrentTilemap(tilemap`level`)
     for (let wall1 of tiles.getTilesByType(assets.tile`myTile0`)) {
         tiles.setWallAt(wall1, true)
     }
@@ -168,6 +245,132 @@ function callbuy () {
         }
     })
 }
+function load_screen () {
+    load_bar = statusbars.create(20, 4, StatusBarKind.load)
+    load_bar.max = 5000
+    load_bar.value = 0
+    load_bar.setColor(7, 12)
+    textSprite = textsprite.create("loading", 15, 0)
+    textSprite.setPosition(79, 73)
+    load_sprite = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . c . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
+    animation.runImageAnimation(
+    load_sprite,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . c . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . c c c . . . . . . . 
+        . . . . . . c c c . . . . . . . 
+        . . . . . . c c c . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . c c c c c c . . . . . . 
+        . . . . c c c c c c . . . . . . 
+        . . . . c c c c c c . . . . . . 
+        . . . . c c c c c c . . . . . . 
+        . . . . c c c c c c . . . . . . 
+        . . . . c c c c c c . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . c c c c c c c c . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . c c c c c c c c c c c . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
+    100,
+    true
+    )
+    load_bar.attachToSprite(load_sprite)
+    while (load_bar.value != 5000) {
+        load_bar.value += 500
+        pause(200)
+    }
+    animation.stopAnimation(animation.AnimationTypes.All, load_sprite)
+    sprites.destroy(load_bar)
+    sprites.destroy(load_sprite)
+    sprites.destroy(textSprite)
+}
 function load_status_bar () {
     healthBar = statusbars.create(20, 4, StatusBarKind.Health)
     healthBar.attachToSprite(mySprite)
@@ -175,6 +378,7 @@ function load_status_bar () {
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile25`, function (sprite, location) {
     timer.throttle("action", 500, function () {
+        music.stopAllSounds()
         sprites.destroy(mySprite2)
         tiles.setCurrentTilemap(tilemap`level`)
         load_wall()
@@ -279,6 +483,7 @@ function witchtrade () {
                 effects.confetti.startScreenEffect(5000)
                 game.showLongText("thank you for getting my stone here is 100 gold", DialogLayout.Bottom)
                 info.changeScoreBy(100)
+                quest_objective1 += -1
                 canMove = true
                 menuOpen = false
             } else {
@@ -334,6 +539,8 @@ function encounter1 () {
         dead_screen()
     } else {
         if (statusbar2.value == 0) {
+            music.stopAllSounds()
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You won the fight.", "Gain 20 gold")
             info.changeScoreBy(50)
             sprites.destroy(enemy1, effects.spray, 500)
@@ -365,6 +572,7 @@ function encounter1 () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest2`, function (sprite, location) {
     timer.throttle("action", 500, function () {
         if (game.ask("Open chest?") && Chest2 == 0) {
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You found 50 gold")
             info.changeScoreBy(50)
             Chest2 += 1
@@ -420,6 +628,7 @@ function potion () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`chest1`, function (sprite, location) {
     timer.throttle("action", 500, function () {
         if (game.ask("Open chest?") && Chest1 == 0) {
+            music.play(music.createSong(assets.song`open chest`), music.PlaybackMode.InBackground)
             game.splash("You found 50 gold")
             info.changeScoreBy(50)
             Chest1 += 1
@@ -454,6 +663,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile55`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile11`, function (sprite, location) {
     timer.throttle("action", 1000, function () {
         if (game.ask("enter witches hut?")) {
+            music.play(music.createSong(assets.song`whitches hut`), music.PlaybackMode.LoopingInBackground)
             tiles.setCurrentTilemap(tilemap`house inside 1`)
             mySprite2 = sprites.create(assets.image`witch`, SpriteKind.npc)
             mySprite2.setPosition(150, 15)
@@ -493,17 +703,13 @@ let Attack: miniMenu.MenuSprite = null
 let shop1: miniMenu.MenuSprite = null
 let myIndicator2: damageIndicators.Indicator = null
 let mySprite2: Sprite = null
+let load_sprite: Sprite = null
+let textSprite: TextSprite = null
+let load_bar: StatusBarSprite = null
 let myMenu: miniMenu.MenuSprite = null
 let inventorycount: miniMenu.MenuSprite = null
 let inventory_menu: miniMenu.MenuSprite = null
-let menuOpen = false
-let enemy1: Sprite = null
-let healthBar: StatusBarSprite = null
-let statusbar2: StatusBarSprite = null
-let In_Combat = 0
-let fightStatus = 0
-let enemyHeal = 0
-let mySprite: Sprite = null
+let gold = 0
 let quest_objective1 = 0
 let questStatus = 0
 let Chest2 = 0
@@ -512,78 +718,16 @@ let canMove = false
 let Stamina = 0
 let Mana = 0
 let Heal = 0
-Heal = 1
-Mana = 1
-Stamina = 1
-canMove = true
-Chest1 = 0
-Chest2 = 0
-// 0 = quest not started, 1 = quest in progress, 2 = quest completed
-questStatus = 0
-quest_objective1 = 0
-let gold = 50
-mySprite = sprites.create(assets.image`character`, SpriteKind.Player)
-info.setScore(gold)
-load_status_bar()
-mySprite.setVelocity(0, 0)
-mySprite.setPosition(14, 77)
-mySprite.setStayInScreen(true)
-mySprite.setBounceOnWall(true)
-tiles.setCurrentTilemap(tilemap`level`)
-for (let wall1 of tiles.getTilesByType(assets.tile`myTile0`)) {
-    tiles.setWallAt(wall1, true)
-}
-for (let wall2 of tiles.getTilesByType(assets.tile`myTile12`)) {
-    tiles.setWallAt(wall2, true)
-}
-for (let wall3 of tiles.getTilesByType(assets.tile`myTile13`)) {
-    tiles.setWallAt(wall3, true)
-}
-for (let wall4 of tiles.getTilesByType(assets.tile`myTile17`)) {
-    tiles.setWallAt(wall4, true)
-}
-for (let wall5 of tiles.getTilesByType(assets.tile`myTile19`)) {
-    tiles.setWallAt(wall5, true)
-}
-for (let wall6 of tiles.getTilesByType(assets.tile`myTile3`)) {
-    tiles.setWallAt(wall6, true)
-}
-for (let wall7 of tiles.getTilesByType(assets.tile`myTile21`)) {
-    tiles.setWallAt(wall7, true)
-}
-for (let wall8 of tiles.getTilesByType(assets.tile`myTile28`)) {
-    tiles.setWallAt(wall8, true)
-}
-for (let wall9 of tiles.getTilesByType(assets.tile`myTile29`)) {
-    tiles.setWallAt(wall9, true)
-}
-for (let wall10 of tiles.getTilesByType(assets.tile`myTile29`)) {
-    tiles.setWallAt(wall10, true)
-}
-for (let wall11 of tiles.getTilesByType(assets.tile`myTile31`)) {
-    tiles.setWallAt(wall11, true)
-}
-for (let wall12 of tiles.getTilesByType(assets.tile`myTile33`)) {
-    tiles.setWallAt(wall12, true)
-}
-for (let wall13 of tiles.getTilesByType(assets.tile`myTile32`)) {
-    tiles.setWallAt(wall13, true)
-}
-for (let wall14 of tiles.getTilesByType(assets.tile`myTile34`)) {
-    tiles.setWallAt(wall14, true)
-}
-for (let wall15 of tiles.getTilesByType(assets.tile`myTile35`)) {
-    tiles.setWallAt(wall15, true)
-}
-for (let wall20 of tiles.getTilesByType(assets.tile`myTile44`)) {
-    tiles.setWallAt(wall20, true)
-}
-for (let wall21 of tiles.getTilesByType(assets.tile`myTile45`)) {
-    tiles.setWallAt(wall21, true)
-}
-for (let wall22 of tiles.getTilesByType(assets.tile`myTile52`)) {
-    tiles.setWallAt(wall22, true)
-}
+let menuOpen = false
+let enemy1: Sprite = null
+let healthBar: StatusBarSprite = null
+let mySprite: Sprite = null
+let statusbar2: StatusBarSprite = null
+let In_Combat = 0
+let fightStatus = 0
+let enemyHeal = 0
+load_screen()
+load_game()
 game.onUpdate(function () {
     if (canMove == true) {
         controller.moveSprite(mySprite, 100, 100)
